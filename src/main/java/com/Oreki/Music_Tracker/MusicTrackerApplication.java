@@ -8,6 +8,7 @@ public class MusicTrackerApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(MusicTrackerApplication.class, args);
+		System.out.println("Hlo");
 	}
 
 }
