@@ -7,11 +7,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-
 public class Student {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private long id;
+    private int id;
     @Column(name="username")
     private String username;
 
@@ -30,9 +29,6 @@ public class Student {
         return username;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public void setPassword(String password) {
         this.password = password;
