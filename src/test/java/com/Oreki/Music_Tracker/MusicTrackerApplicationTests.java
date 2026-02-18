@@ -11,8 +11,7 @@ class MusicTrackerApplicationTests {
 	private StudentDao studentDao;
 
 	@Test
-	public void addStudent(){
+	void contextLoads() throws Exception {
 		
 	}
-
 }

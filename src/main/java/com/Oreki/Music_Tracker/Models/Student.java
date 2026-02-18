@@ -1,4 +1,4 @@
-package com.Oreki.Music_Tracker;
+package com.Oreki.Music_Tracker.Models;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -17,7 +17,7 @@ public class Student {
     @Column(name="password")
     private String password;
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
