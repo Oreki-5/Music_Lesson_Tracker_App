@@ -32,8 +32,21 @@ public class StudentDao {
         studentRepo.save(student);
     }
 
-    public void deleteStudent(int id){
+    public boolean deleteStudent(int id){
+
+        // Checking if the exercise id exist in tracker table
+        List<Tracker> tracker = new ArrayList<>();
+        Streamable.of(trackerRepo.findAll()).filter(record -> record.getStudentID() == id).forEach(tracker::add);
         studentRepo.deleteById(id);
+        if(!tracker.isEmpty()){
+            tracker.forEach(record -> trackerRepo.delete(record));
+            return true;
+        }
+        else{
+            return false;
+        }
+        
+        
 
     }
 
@@ -50,12 +63,29 @@ public class StudentDao {
         return exercise;
     }
 
+    public List<Exercise> getAllExerciseById(int id){
+        List<Exercise> exercise = new ArrayList<>();
+        Streamable.of(exerciseRepo.findAll()).filter(record-> record.getId()==id).forEach(exercise::add);
+        return exercise;
+    }
+
     public void saveExercise(Exercise exercise){
         exerciseRepo.save(exercise);
     }
 
-    public void deleteExercise(int id){
-        exerciseRepo.deleteById(id);
+    public boolean deleteExercise(int id){
+
+        // Checking if the exercise id exist in tracker table
+        List<Tracker> tracker = new ArrayList<>();
+        Streamable.of(trackerRepo.findAll()).filter(record -> record.getExeID() == id).forEach(tracker::add);
+        if(tracker.isEmpty()){
+            exerciseRepo.deleteById(id);
+            return true;
+        }
+        else{
+            return false;
+        }
+        
 
     }
     
@@ -67,9 +97,9 @@ public class StudentDao {
     // For Tracker table
 
     public List<Tracker> getAllTrackers(){
-        List<Tracker> tracker = new ArrayList<>();
-        Streamable.of(trackerRepo.findAll()).forEach(tracker::add);
-        return tracker;
+        List<Tracker> trackers = new ArrayList<>();
+        Streamable.of(trackerRepo.findAll()).forEach(trackers::add);
+        return trackers;
     }
 
     public List<Tracker> getTrackerByStudentID(int studentID){
