@@ -12,18 +12,23 @@ public class Tracker {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
 
+    // dropbox
     @Column(name="studentID")
     private int studentID;
 
+    // dropbox
     @Column(name="exeID")
     private int exeID;
 
+    // radio
     @Column(name="status")
     private String status;
 
+    // text area
     @Column(name="feedback")
     private String feedback;
 
+    // texxt
     @Column(name="audioURL")
     private String audioURL;
 

@@ -19,40 +19,44 @@ import com.Oreki.Music_Tracker.StudentDao;
 @RestController
 @RequestMapping("/student")
 public class StudentController {
-    
+
     @Autowired
     private StudentDao studentDao;
 
-
     @GetMapping("/getAll")
-    public List<Student> getStudents(){
+    public List<Student> getStudents() {
         return studentDao.getAllStudents();
-        
+
     }
 
     @PostMapping("/save")
-    public void saveStudent(@RequestBody Student student){
-        studentDao.saveStudent(student);
-        
-        
+    public ResponseEntity<String> saveStudent(@RequestBody Student student) {
+        String dupeCheck = studentDao.saveStudent(student);
+
+        return switch (dupeCheck) {
+            case "ok" -> new ResponseEntity<>("Student added successfully", HttpStatus.OK);
+            case "duplicate" -> new ResponseEntity<>("Student name already exists", HttpStatus.CONFLICT);
+            case "pattern_fail" -> new ResponseEntity<>("Username doesn't satisfy requirements", HttpStatus.BAD_REQUEST);
+            default -> new ResponseEntity<>("Server Error",HttpStatus.INTERNAL_SERVER_ERROR);
+        }; 
+
+
     }
+
     @PostMapping("/update")
-    public void updateStudent(@RequestBody Student student){
+    public void updateStudent(@RequestBody Student student) {
         studentDao.updateStudent(student);
-        
-        
+
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteStudentById(@RequestParam int id){
-        if(studentDao.deleteStudent(id)){
-            return new ResponseEntity<>("Student Deleted. All Records of Student in Tracker table also Deleted",HttpStatus.OK);
-        }
-        else{
-            return new ResponseEntity<>("Student ID not found",HttpStatus.NOT_FOUND);
+    public ResponseEntity<String> deleteStudentById(@RequestParam int id) {
+        if (studentDao.deleteStudent(id)) {
+            return new ResponseEntity<>("Student Deleted. All Records of Student in Tracker table also Deleted",
+                    HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Student ID not found", HttpStatus.NOT_FOUND);
         }
     }
 
-    
 }
-

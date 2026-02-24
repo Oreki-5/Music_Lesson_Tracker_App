@@ -3,6 +3,8 @@ package com.Oreki.Music_Tracker.Controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,8 +36,17 @@ public class TrackerController {
     }
 
     @PostMapping("/save")
-    public void saveTracker(@RequestBody Tracker tracker){
-        studentDao.saveTracker(tracker);
+    public ResponseEntity<String> saveTracker(@RequestBody Tracker tracker){
+        boolean dupeCheck = studentDao.saveTracker(tracker);
+        
+        if(dupeCheck){
+            return new ResponseEntity<>("Record added successfully",HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<>("Record already exists",HttpStatus.NOT_FOUND);
+        }
+        
+
         
         
     }

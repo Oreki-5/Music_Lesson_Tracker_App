@@ -12,6 +12,9 @@ public class Exercise {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
 
+    @Column(name="tite")
+    private String title;
+
     @Column(name="urlString")
     private String urlString;
 
@@ -26,6 +29,14 @@ public class Exercise {
 
     public String getUrlString() {
         return urlString;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     

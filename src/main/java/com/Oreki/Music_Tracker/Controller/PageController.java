@@ -11,4 +11,12 @@ public class PageController {
     public String index(){
         return "index";
     }
+    @RequestMapping("/exercise")
+    public String exercise(){
+        return "exerciseUploader";
+    }
+    @RequestMapping("/lessons")
+    public String lesson(){
+        return "LessonAssigner";
+    }
 }
