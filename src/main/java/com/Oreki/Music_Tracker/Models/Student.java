@@ -17,6 +17,12 @@ public class Student {
     @Column(name="password")
     private String password;
 
+    @Column(name="role")
+    private String role;
+
+
+
+
     public int getId() {
         return id;
     }
@@ -29,6 +35,11 @@ public class Student {
         return username;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    
 
     public void setPassword(String password) {
         this.password = password;
@@ -38,6 +49,11 @@ public class Student {
         this.username = username;
     }
 
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    
 
 
 

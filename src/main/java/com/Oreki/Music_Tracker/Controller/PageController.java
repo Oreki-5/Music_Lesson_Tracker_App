@@ -19,4 +19,8 @@ public class PageController {
     public String lesson(){
         return "LessonAssigner";
     }
+    @RequestMapping("/list")
+    public String list(){
+        return "exerciseList";
+    }
 }

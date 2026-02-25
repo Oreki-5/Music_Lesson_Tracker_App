@@ -1,0 +1,307 @@
+<script>
+  window.onload = function loadStudents() {
+    populateSelect();
+  };
+
+  async function populateSelect() {
+    try {
+      const response = await fetch("http://localhost:8080/tracker/getAll", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const trackerData = await response.json();
+      debugger;
+      const tbodyElement = document.querySelector("tbody");
+
+      trackerData.forEach((record) => {
+        tbodyElement.innerHTML += `<tr>
+          <td>${record.id}</td>
+          <td>${record.studentID}</td>
+          <td>${record.exeID}</td>
+          <td>${record.status}</td>
+          <td>${record.feedback}</td>
+          </tr>`;
+      });
+
+      const exerciseData = await exeResponse.json();
+      debugger;
+      const exeOptions = document.getElementById("exercise");
+
+      exerciseData.forEach((exercise) => {
+        const option = document.createElement("option");
+        option.value = exercise.id;
+        option.textContent = exercise.title;
+        exeOptions.appendChild(option);
+      });
+    } catch (error) {
+      console.error("Error fetching JSON:", error);
+    }
+  }
+</script>
+
+<style>
+  @import "bourbon@5.*";
+
+  html {
+    box-sizing: border-box;
+  }
+
+  *,
+  *:before,
+  *:after {
+    box-sizing: inherit;
+  }
+
+  body {
+    color: rgba(0, 0, 0, 0.87);
+  }
+
+  a {
+    color: rgba(38, 137, 13, 1);
+
+    &:hover,
+    &:focus {
+      color: rgba(4, 106, 56, 1);
+    }
+  }
+
+  .container {
+    margin: 5% 3%;
+
+    @media (min-width: 48em) {
+      margin: 2%;
+    }
+
+    @media (min-width: 75em) {
+      margin: 2em auto;
+      max-width: 75em;
+    }
+  }
+
+  .responsive-table {
+    width: 100%;
+    margin-bottom: 1.5em;
+    border-spacing: 0;
+
+    @media (min-width: 48em) {
+      font-size: 0.9em;
+    }
+
+    @media (min-width: 62em) {
+      font-size: 1em;
+    }
+
+    thead {
+      /* // Accessibly hide <thead> on narrow viewports */
+      position: absolute;
+      clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+      padding: 0;
+      border: 0;
+      height: 1px;
+      width: 1px;
+      overflow: hidden;
+
+      @media (min-width: 48em) {
+        /* // Unhide <thead> on wide viewports */
+        position: relative;
+        clip: auto;
+        height: auto;
+        width: auto;
+        overflow: auto;
+      }
+
+      th {
+        background-color: rgb(59, 35, 145);
+        border: 1px solid rgb(59, 35, 145);
+        font-weight: normal;
+        text-align: center;
+        color: white;
+
+        &:first-of-type {
+          text-align: left;
+        }
+      }
+    }
+
+    /* // Set these items to display: block for narrow viewports */
+    tbody,
+    tr,
+    th,
+    td {
+      display: block;
+      padding: 0;
+      text-align: left;
+      white-space: normal;
+    }
+
+    tr {
+      @media (min-width: 48em) {
+        /* // Undo display: block */
+        display: table-row;
+      }
+    }
+
+    th,
+    td {
+      padding: 0.5em;
+      vertical-align: middle;
+
+      @media (min-width: 30em) {
+        padding: 0.75em 0.5em;
+      }
+
+      @media (min-width: 48em) {
+        /* // Undo display: block */
+        display: table-cell;
+        padding: 0.5em;
+      }
+
+      @media (min-width: 62em) {
+        padding: 0.75em 0.5em;
+      }
+
+      @media (min-width: 75em) {
+        padding: 0.75em;
+      }
+    }
+
+    caption {
+      margin-bottom: 1em;
+      font-size: 1em;
+      font-weight: bold;
+      text-align: center;
+
+      @media (min-width: 48em) {
+        font-size: 1.5em;
+      }
+    }
+
+    tfoot {
+      font-size: 0.8em;
+      font-style: italic;
+
+      @media (min-width: 62em) {
+        font-size: 0.9em;
+      }
+    }
+
+    tbody {
+      @media (min-width: 48em) {
+        /* // Undo display: block */
+        display: table-row-group;
+      }
+
+      tr {
+        margin-bottom: 1em;
+
+        @media (min-width: 48em) {
+          /* // Undo display: block */
+          display: table-row;
+          border-width: 1px;
+        }
+
+        &:last-of-type {
+          margin-bottom: 0;
+        }
+
+        &:nth-of-type(even) {
+          @media (min-width: 48em) {
+            background-color: rgba(0, 0, 0, 0.12);
+          }
+        }
+      }
+
+      th[scope="row"] {
+        background-color: rgb(255, 255, 255);
+        color: white;
+
+        @media (min-width: 30em) {
+          border-left: 1px solid rgb(0, 0, 0);
+          border-bottom: 1px solid rgb(0, 0, 0);
+        }
+
+        @media (min-width: 48em) {
+          background-color: transparent;
+          color: rgba(0, 0, 0.87);
+          text-align: left;
+        }
+      }
+
+      td {
+        text-align: right;
+
+        @media (min-width: 48em) {
+          border-left: 1px solid rgb(0, 0, 0);
+          border-bottom: 1px solid rgb(0, 0, 0);
+          text-align: center;
+        }
+
+        &:last-of-type {
+          @media (min-width: 48em) {
+            border-right: 1px solid rgb(0, 0, 0);
+          }
+        }
+      }
+
+      td[data-type="currency"] {
+        text-align: right;
+      }
+
+      td[data-title]:before {
+        content: attr(data-title);
+        float: left;
+        font-size: 0.8em;
+        color: rgba(0, 0, 0, 0.54);
+
+        @media (min-width: 30em) {
+          font-size: 0.9em;
+        }
+
+        @media (min-width: 48em) {
+          content: none;
+        }
+      }
+    }
+  }
+</style>
+<body>
+  <div class="container">
+    <table class="responsive-table">
+      <caption>
+        Top 10 Grossing Animated Films of All Time
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Student ID</th>
+          <th scope="col">Exercise ID</th>
+          <th scope="col">Status</th>
+          <th scope="col">Feedback</th>
+        </tr>
+      </thead>
+      <tfoot>
+        <tr>
+          <td colspan="7">
+            Sources:
+            <a
+              href="http://en.wikipedia.org/wiki/List_of_highest-grossing_animated_films"
+              rel="external"
+              >Wikipedia</a
+            >
+            &amp;
+            <a
+              href="http://www.boxofficemojo.com/genres/chart/?id=animation.htm"
+              rel="external"
+              >Box Office Mojo</a
+            >. Data is current as of January 17, 2025.
+          </td>
+        </tr>
+      </tfoot>
+      <tbody id="records">
+      </tbody>
+    </table>
+  </div>
+</body>
